@@ -1,6 +1,6 @@
-from agents.Base_Agent import Base_Agent
-from utilities.OU_Noise import OU_Noise
-from utilities.data_structures.Replay_Buffer import Replay_Buffer
+from ..Base_Agent import Base_Agent
+from ...utilities.OU_Noise import OU_Noise
+from ...utilities.data_structures.Replay_Buffer import Replay_Buffer
 from torch.optim import Adam
 import torch
 import torch.nn.functional as F
@@ -89,7 +89,6 @@ class SAC(Base_Agent):
             if not eval_ep: self.save_experience(experience=(self.state, self.action, self.reward, self.next_state, mask))
             self.state = self.next_state
             self.global_step_number += 1
-        print(self.total_episode_score_so_far)
         if eval_ep: self.print_summary_of_latest_evaluation_episode()
         self.episode_number += 1
 
@@ -101,7 +100,7 @@ class SAC(Base_Agent):
         if eval_ep: action = self.actor_pick_action(state=state, eval=True)
         elif self.global_step_number < self.hyperparameters["min_steps_before_learning"]:
             action = self.environment.action_space.sample()
-            print("Picking random action ", action)
+            # print("Picking random action ", action)
         else: action = self.actor_pick_action(state=state)
         if self.add_extra_noise:
             action += self.noise.sample()
@@ -112,7 +111,7 @@ class SAC(Base_Agent):
         an action that has partly been randomly sampled 2) If eval = True then we pick the action that comes directly
         from the network and so did not involve any random sampling"""
         if state is None: state = self.state
-        state = torch.FloatTensor([state]).to(self.device)
+        state = torch.FloatTensor(np.array(state)).to(self.device)
         if len(state.shape) == 1: state = state.unsqueeze(0)
         if eval == False: action, _, _ = self.produce_action_and_action_info(state)
         else:

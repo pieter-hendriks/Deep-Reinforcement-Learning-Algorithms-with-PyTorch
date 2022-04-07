@@ -1,5 +1,5 @@
-from agents.actor_critic_agents.DDPG import DDPG
-from agents.HER_Base import HER_Base
+from ..actor_critic_agents.DDPG import DDPG
+from ..HER_Base import HER_Base
 
 class DDPG_HER(HER_Base, DDPG):
     """DDPG algorithm with hindsight experience replay"""

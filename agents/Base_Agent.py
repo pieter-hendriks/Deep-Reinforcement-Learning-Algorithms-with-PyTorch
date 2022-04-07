@@ -106,9 +106,10 @@ class Base_Agent(object):
 
     def get_trials(self):
         """Gets the number of trials to average a score over"""
-        if self.environment_title in ["AntMaze", "FetchReach", "Hopper", "Walker2d", "CartPole"]: return 100
-        try: return self.environment.unwrapped.trials
-        except AttributeError: return self.environment.spec.trials
+        return 1
+        # if self.environment_title in ["AntMaze", "FetchReach", "Hopper", "Walker2d", "CartPole"]: return 100
+        # try: return self.environment.unwrapped.trials
+        # except AttributeError: return self.environment.spec.trials
 
     def setup_logger(self):
         """Sets up the logger"""
@@ -187,7 +188,8 @@ class Base_Agent(object):
         while self.episode_number < num_episodes:
             self.reset_game()
             self.step()
-            if save_and_print_results: self.save_and_print_result()
+            if save_and_print_results: 
+              self.save_and_print_result()
         time_taken = time.time() - start
         if show_whether_achieved_goal: self.show_whether_achieved_goal()
         if self.config.save_model: self.locally_save_policy()

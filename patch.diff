@@ -1,0 +1,608 @@
+diff --git a/__init__.py b/__init__.py
+new file mode 100644
+index 0000000..d7eb044
+--- /dev/null
++++ b/__init__.py
+@@ -0,0 +1,4 @@
++from .agents import *
++#from .environments import *
++from .exploration_strategies import *
++from .utilities import *
+diff --git a/agents/DQN_agents/DDQN.py b/agents/DQN_agents/DDQN.py
+index a0c36e5..ae08ace 100644
+--- a/agents/DQN_agents/DDQN.py
++++ b/agents/DQN_agents/DDQN.py
+@@ -1,4 +1,4 @@
+-from agents.DQN_agents.DQN_With_Fixed_Q_Targets import DQN_With_Fixed_Q_Targets
++from ..DQN_agents.DQN_With_Fixed_Q_Targets import DQN_With_Fixed_Q_Targets
+ 
+ class DDQN(DQN_With_Fixed_Q_Targets):
+     """A double DQN agent"""
+diff --git a/agents/DQN_agents/DDQN_With_Prioritised_Experience_Replay.py b/agents/DQN_agents/DDQN_With_Prioritised_Experience_Replay.py
+index ccdd6d6..617861a 100644
+--- a/agents/DQN_agents/DDQN_With_Prioritised_Experience_Replay.py
++++ b/agents/DQN_agents/DDQN_With_Prioritised_Experience_Replay.py
+@@ -1,7 +1,7 @@
+ import torch
+ import torch.nn.functional as F
+-from agents.DQN_agents.DDQN import DDQN
+-from utilities.data_structures.Prioritised_Replay_Buffer import Prioritised_Replay_Buffer
++from ..DQN_agents.DDQN import DDQN
++from ...utilities.data_structures.Prioritised_Replay_Buffer import Prioritised_Replay_Buffer
+ 
+ class DDQN_With_Prioritised_Experience_Replay(DDQN):
+     """A DQN agent with prioritised experience replay"""
+diff --git a/agents/DQN_agents/DQN.py b/agents/DQN_agents/DQN.py
+index d151e5f..408dbbd 100644
+--- a/agents/DQN_agents/DQN.py
++++ b/agents/DQN_agents/DQN.py
+@@ -5,9 +5,9 @@ import random
+ import torch.optim as optim
+ import torch.nn.functional as F
+ import numpy as np
+-from agents.Base_Agent import Base_Agent
+-from exploration_strategies.Epsilon_Greedy_Exploration import Epsilon_Greedy_Exploration
+-from utilities.data_structures.Replay_Buffer import Replay_Buffer
++from ..Base_Agent import Base_Agent
++from ...exploration_strategies.Epsilon_Greedy_Exploration import Epsilon_Greedy_Exploration
++from ...utilities.data_structures.Replay_Buffer import Replay_Buffer
+ 
+ class DQN(Base_Agent):
+     """A deep Q learning agent"""
+diff --git a/agents/DQN_agents/DQN_HER.py b/agents/DQN_agents/DQN_HER.py
+index 9110a38..2b406a8 100644
+--- a/agents/DQN_agents/DQN_HER.py
++++ b/agents/DQN_agents/DQN_HER.py
+@@ -1,5 +1,5 @@
+-from agents.DQN_agents.DQN import DQN
+-from agents.HER_Base import HER_Base
++from ..DQN_agents.DQN import DQN
++from ..HER_Base import HER_Base
+ 
+ class DQN_HER(HER_Base, DQN):
+     """DQN algorithm with hindsight experience replay"""
+diff --git a/agents/DQN_agents/DQN_With_Fixed_Q_Targets.py b/agents/DQN_agents/DQN_With_Fixed_Q_Targets.py
+index 7cdd492..279f1d8 100644
+--- a/agents/DQN_agents/DQN_With_Fixed_Q_Targets.py
++++ b/agents/DQN_agents/DQN_With_Fixed_Q_Targets.py
+@@ -1,7 +1,7 @@
+ import copy
+ 
+-from agents.Base_Agent import Base_Agent
+-from agents.DQN_agents.DQN import DQN
++from ..Base_Agent import Base_Agent
++from ..DQN_agents.DQN import DQN
+ 
+ class DQN_With_Fixed_Q_Targets(DQN):
+     """A DQN agent that uses an older version of the q_network as the target network"""
+diff --git a/agents/DQN_agents/Dueling_DDQN.py b/agents/DQN_agents/Dueling_DDQN.py
+index 793ccba..e3688fc 100644
+--- a/agents/DQN_agents/Dueling_DDQN.py
++++ b/agents/DQN_agents/Dueling_DDQN.py
+@@ -1,7 +1,7 @@
+ import torch
+ from torch import optim
+-from agents.Base_Agent import Base_Agent
+-from agents.DQN_agents.DDQN import DDQN
++from ..Base_Agent import Base_Agent
++from ..DQN_agents.DDQN import DDQN
+ 
+ class Dueling_DDQN(DDQN):
+     """A dueling double DQN agent as described in the paper http://proceedings.mlr.press/v48/wangf16.pdf"""
+diff --git a/agents/DQN_agents/__init__.py b/agents/DQN_agents/__init__.py
+new file mode 100644
+index 0000000..25bf462
+--- /dev/null
++++ b/agents/DQN_agents/__init__.py
+@@ -0,0 +1,6 @@
++from .DDQN_With_Prioritised_Experience_Replay import *
++from .DDQN import *
++from .DQN import *
++from .DQN_HER import *
++from .DQN_With_Fixed_Q_Targets import *
++from .Dueling_DDQN import *
+diff --git a/agents/HER_Base.py b/agents/HER_Base.py
+index f7de66c..ee7e2fa 100644
+--- a/agents/HER_Base.py
++++ b/agents/HER_Base.py
+@@ -1,7 +1,7 @@
+ import torch
+ import numpy as np
+-from utilities.data_structures.Replay_Buffer import Replay_Buffer
+-from utilities.Utility_Functions import abstract
++from ..utilities.data_structures.Replay_Buffer import Replay_Buffer
++from ..utilities.Utility_Functions import abstract
+ 
+ @abstract
+ class HER_Base(object):
+diff --git a/agents/__init__.py b/agents/__init__.py
+new file mode 100644
+index 0000000..cbec2a5
+--- /dev/null
++++ b/agents/__init__.py
+@@ -0,0 +1,7 @@
++from .actor_critic_agents import *
++from .hierarchical_agents import *
++from .DQN_agents import *
++from .policy_gradient_agents import *
++from .Base_Agent import *
++from .HER_Base import *
++from .Trainer import *
+\ No newline at end of file
+diff --git a/agents/actor_critic_agents/A2C.py b/agents/actor_critic_agents/A2C.py
+index 24f1515..b51a54f 100644
+--- a/agents/actor_critic_agents/A2C.py
++++ b/agents/actor_critic_agents/A2C.py
+@@ -1,4 +1,4 @@
+-from agents.actor_critic_agents.A3C import A3C
++from .A3C import A3C
+ 
+ class A2C(A3C):
+     """Synchronous version of A2C algorithm from deepmind paper https://arxiv.org/pdf/1602.01783.pdf. The only
+diff --git a/agents/actor_critic_agents/A3C.py b/agents/actor_critic_agents/A3C.py
+index 9b37ebb..14fcafe 100644
+--- a/agents/actor_critic_agents/A3C.py
++++ b/agents/actor_critic_agents/A3C.py
+@@ -6,8 +6,8 @@ import torch
+ from torch import multiprocessing
+ from torch.multiprocessing import Queue
+ from torch.optim import Adam
+-from agents.Base_Agent import Base_Agent
+-from utilities.Utility_Functions import create_actor_distribution, SharedAdam
++from ..Base_Agent import Base_Agent
++from ...utilities import create_actor_distribution, SharedAdam
+ 
+ class A3C(Base_Agent):
+     """Actor critic A3C algorithm from deepmind paper https://arxiv.org/pdf/1602.01783.pdf"""
+diff --git a/agents/actor_critic_agents/DDPG.py b/agents/actor_critic_agents/DDPG.py
+index 8c3e5fd..1bd6f18 100644
+--- a/agents/actor_critic_agents/DDPG.py
++++ b/agents/actor_critic_agents/DDPG.py
+@@ -1,9 +1,9 @@
+ import torch
+ import torch.nn.functional as functional
+ from torch import optim
+-from agents.Base_Agent import Base_Agent
+-from utilities.data_structures.Replay_Buffer import Replay_Buffer
+-from exploration_strategies.OU_Noise_Exploration import OU_Noise_Exploration
++from ..Base_Agent import Base_Agent
++from ...utilities import Replay_Buffer
++from ...exploration_strategies import OU_Noise_Exploration
+ 
+ class DDPG(Base_Agent):
+     """A DDPG Agent"""
+diff --git a/agents/actor_critic_agents/DDPG_HER.py b/agents/actor_critic_agents/DDPG_HER.py
+index cff29b2..528841f 100644
+--- a/agents/actor_critic_agents/DDPG_HER.py
++++ b/agents/actor_critic_agents/DDPG_HER.py
+@@ -1,5 +1,5 @@
+-from agents.actor_critic_agents.DDPG import DDPG
+-from agents.HER_Base import HER_Base
++from ..actor_critic_agents.DDPG import DDPG
++from ..HER_Base import HER_Base
+ 
+ class DDPG_HER(HER_Base, DDPG):
+     """DDPG algorithm with hindsight experience replay"""
+diff --git a/agents/actor_critic_agents/SAC.py b/agents/actor_critic_agents/SAC.py
+index b997fe9..bc988a4 100644
+--- a/agents/actor_critic_agents/SAC.py
++++ b/agents/actor_critic_agents/SAC.py
+@@ -1,6 +1,6 @@
+-from agents.Base_Agent import Base_Agent
+-from utilities.OU_Noise import OU_Noise
+-from utilities.data_structures.Replay_Buffer import Replay_Buffer
++from ..Base_Agent import Base_Agent
++from ...utilities.OU_Noise import OU_Noise
++from ...utilities.data_structures.Replay_Buffer import Replay_Buffer
+ from torch.optim import Adam
+ import torch
+ import torch.nn.functional as F
+diff --git a/agents/actor_critic_agents/SAC_Discrete.py b/agents/actor_critic_agents/SAC_Discrete.py
+index 86f4e8e..8f84aa0 100644
+--- a/agents/actor_critic_agents/SAC_Discrete.py
++++ b/agents/actor_critic_agents/SAC_Discrete.py
+@@ -2,10 +2,10 @@ import torch
+ from torch.optim import Adam
+ import torch.nn.functional as F
+ import numpy as np
+-from agents.Base_Agent import Base_Agent
+-from utilities.data_structures.Replay_Buffer import Replay_Buffer
+-from agents.actor_critic_agents.SAC import SAC
+-from utilities.Utility_Functions import create_actor_distribution
++from ..Base_Agent import Base_Agent
++from ...utilities.data_structures.Replay_Buffer import Replay_Buffer
++from .SAC import SAC
++from ...utilities.Utility_Functions import create_actor_distribution
+ 
+ class SAC_Discrete(SAC):
+     """The Soft Actor Critic for discrete actions. It inherits from SAC for continuous actions and only changes a few
+diff --git a/agents/actor_critic_agents/TD3.py b/agents/actor_critic_agents/TD3.py
+index 512482e..eabdbd3 100644
+--- a/agents/actor_critic_agents/TD3.py
++++ b/agents/actor_critic_agents/TD3.py
+@@ -1,9 +1,9 @@
+ import torch
+ import torch.nn.functional as functional
+ from torch import optim
+-from agents.Base_Agent import Base_Agent
++from ..Base_Agent import Base_Agent
+ from .DDPG import DDPG
+-from exploration_strategies.Gaussian_Exploration import Gaussian_Exploration
++from ...exploration_strategies import Gaussian_Exploration
+ 
+ class TD3(DDPG):
+     """A TD3 Agent from the paper Addressing Function Approximation Error in Actor-Critic Methods (Fujimoto et al. 2018)
+diff --git a/agents/actor_critic_agents/__init__.py b/agents/actor_critic_agents/__init__.py
+new file mode 100644
+index 0000000..421ff85
+--- /dev/null
++++ b/agents/actor_critic_agents/__init__.py
+@@ -0,0 +1,8 @@
++from http.client import ImproperConnectionState
++from .A2C import *
++from .A3C import *
++from .DDPG import *
++from .DDPG_HER import *
++from .SAC import *
++from .SAC_Discrete import *
++from .TD3 import *
+diff --git a/agents/hierarchical_agents/DIAYN.py b/agents/hierarchical_agents/DIAYN.py
+index a44be64..ac442a7 100644
+--- a/agents/hierarchical_agents/DIAYN.py
++++ b/agents/hierarchical_agents/DIAYN.py
+@@ -6,9 +6,9 @@ import random
+ import time
+ import copy
+ import torch.nn.functional as F
+-from agents.Base_Agent import Base_Agent
+-from agents.DQN_agents.DDQN import DDQN
+-from agents.actor_critic_agents.SAC import SAC
++from ..Base_Agent import Base_Agent
++from ..DQN_agents.DDQN import DDQN
++from ..actor_critic_agents.SAC import SAC
+ 
+ # NOTE: DIAYN calculates diversity of states penalty each timestep but it might be better to only base it on where the
+ # agent got to in the last timestep, or after X timesteps
+diff --git a/agents/hierarchical_agents/HIRO.py b/agents/hierarchical_agents/HIRO.py
+index 558a0f9..1ecd8b7 100644
+--- a/agents/hierarchical_agents/HIRO.py
++++ b/agents/hierarchical_agents/HIRO.py
+@@ -2,9 +2,9 @@ import copy
+ import torch
+ import numpy as np
+ from gym import Wrapper
+-from agents.Base_Agent import Base_Agent
+-from agents.actor_critic_agents.DDPG import DDPG
+-from agents.Trainer import Trainer
++from ..Base_Agent import Base_Agent
++from ..actor_critic_agents.DDPG import DDPG
++from ..Trainer import Trainer
+ 
+ 
+ class HIRO(Base_Agent):
+diff --git a/agents/hierarchical_agents/SNN_HRL.py b/agents/hierarchical_agents/SNN_HRL.py
+index 53a3819..46482ae 100644
+--- a/agents/hierarchical_agents/SNN_HRL.py
++++ b/agents/hierarchical_agents/SNN_HRL.py
+@@ -4,9 +4,9 @@ import time
+ import numpy as np
+ import torch
+ from gym import Wrapper, spaces
+-from agents.Base_Agent import Base_Agent
+-from agents.policy_gradient_agents.PPO import PPO
+-from agents.DQN_agents.DDQN import DDQN
++from ..Base_Agent import Base_Agent
++from ..policy_gradient_agents.PPO import PPO
++from ..DQN_agents.DDQN import DDQN
+ 
+ 
+ class SNN_HRL(Base_Agent):
+diff --git a/agents/hierarchical_agents/__init__.py b/agents/hierarchical_agents/__init__.py
+new file mode 100644
+index 0000000..54e1dcb
+--- /dev/null
++++ b/agents/hierarchical_agents/__init__.py
+@@ -0,0 +1,4 @@
++from .DIAYN import *
++from .h_DQN import *
++from .HIRO import *
++from .SNN_HRL import *
+\ No newline at end of file
+diff --git a/agents/hierarchical_agents/h_DQN.py b/agents/hierarchical_agents/h_DQN.py
+index b6d514b..0724d09 100644
+--- a/agents/hierarchical_agents/h_DQN.py
++++ b/agents/hierarchical_agents/h_DQN.py
+@@ -1,7 +1,7 @@
+ import copy
+ import numpy as np
+-from agents.Base_Agent import Base_Agent
+-from agents.DQN_agents.DDQN import DDQN
++from ..Base_Agent import Base_Agent
++from ..DQN_agents.DDQN import DDQN
+ 
+ class h_DQN(Base_Agent):
+     """Implements hierarchical RL agent h-DQN from paper Kulkarni et al. (2016) https://arxiv.org/abs/1604.06057?context=stat
+diff --git a/agents/policy_gradient_agents/PPO.py b/agents/policy_gradient_agents/PPO.py
+index 98bb8ae..d3eabcd 100644
+--- a/agents/policy_gradient_agents/PPO.py
++++ b/agents/policy_gradient_agents/PPO.py
+@@ -3,10 +3,10 @@ import sys
+ import torch
+ import numpy as np
+ from torch import optim
+-from agents.Base_Agent import Base_Agent
+-from exploration_strategies.Epsilon_Greedy_Exploration import Epsilon_Greedy_Exploration
+-from utilities.Parallel_Experience_Generator import Parallel_Experience_Generator
+-from utilities.Utility_Functions import normalise_rewards, create_actor_distribution
++from ..Base_Agent import Base_Agent
++from ...exploration_strategies.Epsilon_Greedy_Exploration import Epsilon_Greedy_Exploration
++from ...utilities.Parallel_Experience_Generator import Parallel_Experience_Generator
++from ...utilities.Utility_Functions import normalise_rewards, create_actor_distribution
+ 
+ class PPO(Base_Agent):
+     """Proximal Policy Optimization agent"""
+diff --git a/agents/policy_gradient_agents/REINFORCE.py b/agents/policy_gradient_agents/REINFORCE.py
+index 6b9e71a..571bcfa 100644
+--- a/agents/policy_gradient_agents/REINFORCE.py
++++ b/agents/policy_gradient_agents/REINFORCE.py
+@@ -2,7 +2,7 @@ import numpy as np
+ import torch
+ import torch.optim as optim
+ from torch.distributions import Categorical
+-from agents.Base_Agent import Base_Agent
++from ..Base_Agent import Base_Agent
+ 
+ class REINFORCE(Base_Agent):
+     agent_name = "REINFORCE"
+diff --git a/agents/policy_gradient_agents/__init__.py b/agents/policy_gradient_agents/__init__.py
+new file mode 100644
+index 0000000..19d7669
+--- /dev/null
++++ b/agents/policy_gradient_agents/__init__.py
+@@ -0,0 +1,2 @@
++from .PPO import *
++from .REINFORCE import *
+diff --git a/environments/Ant_Navigation_Environments.py b/environments/Ant_Navigation_Environments.py
+index bc908d7..1d6aefd 100644
+--- a/environments/Ant_Navigation_Environments.py
++++ b/environments/Ant_Navigation_Environments.py
+@@ -1,4 +1,4 @@
+-from .ant_environments.create_maze_env import create_maze_env
++from . import create_maze_env
+ import numpy as np
+ 
+ """Environments taken from HIRO paper github repo: https://github.com/tensorflow/models/tree/master/research/efficient-hrl
+diff --git a/environments/__init__.py b/environments/__init__.py
+new file mode 100644
+index 0000000..fea933c
+--- /dev/null
++++ b/environments/__init__.py
+@@ -0,0 +1,7 @@
++from .Ant_Navigation_Environments import *
++from .Atari_Environment import *
++from .Bit_Flipping_Environment import *
++from .Four_Rooms_Environment import *
++from .Long_Corridor_Environment import *
++from .Open_AI_Wrappers import *
++from .ant_environments import *
+\ No newline at end of file
+diff --git a/environments/ant_environments/__init__.py b/environments/ant_environments/__init__.py
+index 8b13789..c75425d 100644
+--- a/environments/ant_environments/__init__.py
++++ b/environments/ant_environments/__init__.py
+@@ -1 +1,8 @@
+ 
++from ant_maze_env import *
++from ant import *
++from create_maze_env import *
++from maze_env import *
++from maze_env_utils import *
++from point_maze_env import *
++from point import *
+\ No newline at end of file
+diff --git a/environments/ant_environments/ant_maze_env.py b/environments/ant_environments/ant_maze_env.py
+index 29b2a76..8f0e7dd 100644
+--- a/environments/ant_environments/ant_maze_env.py
++++ b/environments/ant_environments/ant_maze_env.py
+@@ -5,8 +5,8 @@
+ 
+ 
+ 
+-from ant_environments.maze_env import MazeEnv
+-from ant_environments.ant import AntEnv
++from .maze_env import MazeEnv
++from .ant import AntEnv
+ 
+ 
+ class AntMazeEnv(MazeEnv):
+diff --git a/environments/ant_environments/create_maze_env.py b/environments/ant_environments/create_maze_env.py
+index 913615d..aee674f 100644
+--- a/environments/ant_environments/create_maze_env.py
++++ b/environments/ant_environments/create_maze_env.py
+@@ -5,8 +5,8 @@
+ 
+ 
+ 
+-from ant_environments.ant_maze_env import AntMazeEnv
+-from ant_environments.point_maze_env import PointMazeEnv
++from .ant_maze_env import AntMazeEnv
++from .point_maze_env import PointMazeEnv
+ 
+ import tensorflow as tf
+ import gin.tf
+diff --git a/environments/ant_environments/maze_env.py b/environments/ant_environments/maze_env.py
+index 3c40269..076f0ef 100644
+--- a/environments/ant_environments/maze_env.py
++++ b/environments/ant_environments/maze_env.py
+@@ -16,7 +16,7 @@ import math
+ import numpy as np
+ import gym
+ 
+-from ant_environments import maze_env_utils
++from . import maze_env_utils
+ 
+ # Directory that contains mujoco xml files.
+ MODEL_DIR = 'environments/assets'
+diff --git a/environments/ant_environments/point_maze_env.py b/environments/ant_environments/point_maze_env.py
+index 69df392..c9012b0 100644
+--- a/environments/ant_environments/point_maze_env.py
++++ b/environments/ant_environments/point_maze_env.py
+@@ -8,8 +8,8 @@
+ 
+ 
+ 
+-from ant_environments.maze_env import MazeEnv
+-from ant_environments.point import PointEnv
++from .maze_env import MazeEnv
++from .point import PointEnv
+ 
+ 
+ class PointMazeEnv(MazeEnv):
+diff --git a/exploration_strategies/Epsilon_Greedy_Exploration.py b/exploration_strategies/Epsilon_Greedy_Exploration.py
+index 98316c5..645db8d 100644
+--- a/exploration_strategies/Epsilon_Greedy_Exploration.py
++++ b/exploration_strategies/Epsilon_Greedy_Exploration.py
+@@ -1,4 +1,4 @@
+-from exploration_strategies.Base_Exploration_Strategy import Base_Exploration_Strategy
++from .Base_Exploration_Strategy import Base_Exploration_Strategy
+ import numpy as np
+ import random
+ import torch
+diff --git a/exploration_strategies/Gaussian_Exploration.py b/exploration_strategies/Gaussian_Exploration.py
+index c8186ee..66b80dd 100644
+--- a/exploration_strategies/Gaussian_Exploration.py
++++ b/exploration_strategies/Gaussian_Exploration.py
+@@ -1,4 +1,4 @@
+-from exploration_strategies.Base_Exploration_Strategy import Base_Exploration_Strategy
++from .Base_Exploration_Strategy import Base_Exploration_Strategy
+ import torch
+ from torch.distributions.normal import Normal
+ 
+diff --git a/exploration_strategies/OU_Noise_Exploration.py b/exploration_strategies/OU_Noise_Exploration.py
+index 26a55b0..02034db 100644
+--- a/exploration_strategies/OU_Noise_Exploration.py
++++ b/exploration_strategies/OU_Noise_Exploration.py
+@@ -1,5 +1,5 @@
+-from utilities.OU_Noise import OU_Noise
+-from exploration_strategies.Base_Exploration_Strategy import Base_Exploration_Strategy
++from ..utilities.OU_Noise import OU_Noise
++from .Base_Exploration_Strategy import Base_Exploration_Strategy
+ 
+ class OU_Noise_Exploration(Base_Exploration_Strategy):
+     """Ornstein-Uhlenbeck noise process exploration strategy"""
+diff --git a/exploration_strategies/__init__.py b/exploration_strategies/__init__.py
+new file mode 100644
+index 0000000..ab52f21
+--- /dev/null
++++ b/exploration_strategies/__init__.py
+@@ -0,0 +1,4 @@
++from .Base_Exploration_Strategy import *
++from .Epsilon_Greedy_Exploration import *
++from .Gaussian_Exploration import *
++from .OU_Noise_Exploration import *
+diff --git a/requirements.txt b/requirements.txt
+index cdad116..32ec604 100644
+--- a/requirements.txt
++++ b/requirements.txt
+@@ -1,7 +1,7 @@
+-numpy==1.15.2
+-torch==0.4.1.post2
+-matplotlib==3.0.0
+-PyVirtualDisplay==0.2.1
+-gym==0.10.9
++numpy>=1.15.2
++torch>=0.4.1.post2
++matplotlib>=3.0.0
++PyVirtualDisplay>=0.2.1
++gym>=0.10.9
+ nn_builder
+ tensorflow
+diff --git a/utilities/Parallel_Experience_Generator.py b/utilities/Parallel_Experience_Generator.py
+index e3ed74b..962ac97 100644
+--- a/utilities/Parallel_Experience_Generator.py
++++ b/utilities/Parallel_Experience_Generator.py
+@@ -8,8 +8,8 @@ from contextlib import closing
+ from torch.multiprocessing import Pool
+ from random import randint
+ 
+-from utilities.OU_Noise import OU_Noise
+-from utilities.Utility_Functions import create_actor_distribution
++from .OU_Noise import OU_Noise
++from .Utility_Functions import create_actor_distribution
+ 
+ class Parallel_Experience_Generator(object):
+     """ Plays n episode in parallel using a fixed agent. Only works for PPO or DDPG type agents at the moment, not Q-learning agents"""
+diff --git a/utilities/__init__.py b/utilities/__init__.py
+new file mode 100644
+index 0000000..3505662
+--- /dev/null
++++ b/utilities/__init__.py
+@@ -0,0 +1,8 @@
++from .data_structures import *
++from .grammar_algorithms import *
++from .Deepmind_RMS_Prop import *
++from .Memory_Shaper import *
++from .OU_Noise import *
++from .Parallel_Experience_Generator import *
++from .Tensorboard import *
++from .Utility_Functions import *
+\ No newline at end of file
+diff --git a/utilities/data_structures/Deque.py b/utilities/data_structures/Deque.py
+index 610d4d1..e7944b4 100644
+--- a/utilities/data_structures/Deque.py
++++ b/utilities/data_structures/Deque.py
+@@ -1,5 +1,5 @@
+ import numpy as np
+-from utilities.data_structures.Node import Node
++from .Node import Node
+ 
+ class Deque(object):
+     """Generic deque object"""
+diff --git a/utilities/data_structures/Max_Heap.py b/utilities/data_structures/Max_Heap.py
+index 150bea2..5ae1d9e 100644
+--- a/utilities/data_structures/Max_Heap.py
++++ b/utilities/data_structures/Max_Heap.py
+@@ -1,5 +1,5 @@
+ import numpy as np
+-from utilities.data_structures.Node import Node
++from .Node import Node
+ 
+ class Max_Heap(object):
+     """Generic max heap object"""
+diff --git a/utilities/data_structures/Prioritised_Replay_Buffer.py b/utilities/data_structures/Prioritised_Replay_Buffer.py
+index 3453f77..f644574 100644
+--- a/utilities/data_structures/Prioritised_Replay_Buffer.py
++++ b/utilities/data_structures/Prioritised_Replay_Buffer.py
+@@ -1,7 +1,7 @@
+ import numpy as np
+ import torch
+-from utilities.data_structures.Deque import Deque
+-from utilities.data_structures.Max_Heap import Max_Heap
++from .Deque import Deque
++from .Max_Heap import Max_Heap
+ 
+ class Prioritised_Replay_Buffer(Max_Heap, Deque):
+     """Data structure that maintains a deque, a heap and an array. The deque keeps track of which experiences are the oldest and so
+diff --git a/utilities/data_structures/__init__.py b/utilities/data_structures/__init__.py
+new file mode 100644
+index 0000000..f7d78b0
+--- /dev/null
++++ b/utilities/data_structures/__init__.py
+@@ -0,0 +1,8 @@
++from .Action_Balanced_Replay_Buffer import *
++from .Config import *
++from .Deque import *
++from .Max_Heap import *
++from .Node import *
++from .Prioritised_Replay_Buffer import *
++from .Replay_Buffer import *
++from .Tanh_Distribution import *
+\ No newline at end of file
+diff --git a/utilities/grammar_algorithms/__init__.py b/utilities/grammar_algorithms/__init__.py
+new file mode 100644
+index 0000000..e834d37
+--- /dev/null
++++ b/utilities/grammar_algorithms/__init__.py
+@@ -0,0 +1 @@
++from .k_Sequitur import *
+\ No newline at end of file

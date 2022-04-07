@@ -1,7 +1,7 @@
 import numpy as np
 import torch
-from utilities.data_structures.Deque import Deque
-from utilities.data_structures.Max_Heap import Max_Heap
+from .Deque import Deque
+from .Max_Heap import Max_Heap
 
 class Prioritised_Replay_Buffer(Max_Heap, Deque):
     """Data structure that maintains a deque, a heap and an array. The deque keeps track of which experiences are the oldest and so

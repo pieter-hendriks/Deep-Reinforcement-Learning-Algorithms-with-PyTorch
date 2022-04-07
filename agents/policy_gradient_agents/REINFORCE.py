@@ -2,7 +2,7 @@ import numpy as np
 import torch
 import torch.optim as optim
 from torch.distributions import Categorical
-from agents.Base_Agent import Base_Agent
+from ..Base_Agent import Base_Agent
 
 class REINFORCE(Base_Agent):
     agent_name = "REINFORCE"

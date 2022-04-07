@@ -8,8 +8,8 @@ from contextlib import closing
 from torch.multiprocessing import Pool
 from random import randint
 
-from utilities.OU_Noise import OU_Noise
-from utilities.Utility_Functions import create_actor_distribution
+from .OU_Noise import OU_Noise
+from .Utility_Functions import create_actor_distribution
 
 class Parallel_Experience_Generator(object):
     """ Plays n episode in parallel using a fixed agent. Only works for PPO or DDPG type agents at the moment, not Q-learning agents"""

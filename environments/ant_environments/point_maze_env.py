@@ -8,8 +8,8 @@
 
 
 
-from ant_environments.maze_env import MazeEnv
-from ant_environments.point import PointEnv
+from .maze_env import MazeEnv
+from .point import PointEnv
 
 
 class PointMazeEnv(MazeEnv):

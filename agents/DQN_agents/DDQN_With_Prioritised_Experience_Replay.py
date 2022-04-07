@@ -1,7 +1,7 @@
 import torch
 import torch.nn.functional as F
-from agents.DQN_agents.DDQN import DDQN
-from utilities.data_structures.Prioritised_Replay_Buffer import Prioritised_Replay_Buffer
+from ..DQN_agents.DDQN import DDQN
+from ...utilities.data_structures.Prioritised_Replay_Buffer import Prioritised_Replay_Buffer
 
 class DDQN_With_Prioritised_Experience_Replay(DDQN):
     """A DQN agent with prioritised experience replay"""

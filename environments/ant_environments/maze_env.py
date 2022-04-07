@@ -16,7 +16,7 @@ import math
 import numpy as np
 import gym
 
-from ant_environments import maze_env_utils
+from . import maze_env_utils
 
 # Directory that contains mujoco xml files.
 MODEL_DIR = 'environments/assets'

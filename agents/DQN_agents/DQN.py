@@ -5,9 +5,9 @@ import random
 import torch.optim as optim
 import torch.nn.functional as F
 import numpy as np
-from agents.Base_Agent import Base_Agent
-from exploration_strategies.Epsilon_Greedy_Exploration import Epsilon_Greedy_Exploration
-from utilities.data_structures.Replay_Buffer import Replay_Buffer
+from ..Base_Agent import Base_Agent
+from ...exploration_strategies.Epsilon_Greedy_Exploration import Epsilon_Greedy_Exploration
+from ...utilities.data_structures.Replay_Buffer import Replay_Buffer
 
 class DQN(Base_Agent):
     """A deep Q learning agent"""

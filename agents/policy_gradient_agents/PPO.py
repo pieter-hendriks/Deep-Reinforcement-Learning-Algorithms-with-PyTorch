@@ -3,10 +3,10 @@ import sys
 import torch
 import numpy as np
 from torch import optim
-from agents.Base_Agent import Base_Agent
-from exploration_strategies.Epsilon_Greedy_Exploration import Epsilon_Greedy_Exploration
-from utilities.Parallel_Experience_Generator import Parallel_Experience_Generator
-from utilities.Utility_Functions import normalise_rewards, create_actor_distribution
+from ..Base_Agent import Base_Agent
+from ...exploration_strategies.Epsilon_Greedy_Exploration import Epsilon_Greedy_Exploration
+from ...utilities.Parallel_Experience_Generator import Parallel_Experience_Generator
+from ...utilities.Utility_Functions import normalise_rewards, create_actor_distribution
 
 class PPO(Base_Agent):
     """Proximal Policy Optimization agent"""

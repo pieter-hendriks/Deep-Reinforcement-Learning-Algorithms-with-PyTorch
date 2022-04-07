@@ -5,8 +5,8 @@
 
 
 
-from ant_environments.maze_env import MazeEnv
-from ant_environments.ant import AntEnv
+from .maze_env import MazeEnv
+from .ant import AntEnv
 
 
 class AntMazeEnv(MazeEnv):

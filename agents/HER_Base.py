@@ -1,7 +1,7 @@
 import torch
 import numpy as np
-from utilities.data_structures.Replay_Buffer import Replay_Buffer
-from utilities.Utility_Functions import abstract
+from ..utilities.data_structures.Replay_Buffer import Replay_Buffer
+from ..utilities.Utility_Functions import abstract
 
 @abstract
 class HER_Base(object):

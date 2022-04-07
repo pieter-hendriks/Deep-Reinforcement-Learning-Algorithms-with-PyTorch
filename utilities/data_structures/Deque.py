@@ -1,5 +1,5 @@
 import numpy as np
-from utilities.data_structures.Node import Node
+from .Node import Node
 
 class Deque(object):
     """Generic deque object"""

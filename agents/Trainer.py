@@ -7,6 +7,8 @@ from gym import wrappers
 import numpy as np
 import matplotlib.pyplot as plt
 
+from openAI.agents.agents.Base_Agent import Base_Agent
+
 class Trainer(object):
     """Runs games for given agents. Optionally will visualise and save the results"""
     def __init__(self, config, agents):
@@ -110,7 +112,7 @@ class Trainer(object):
             agent_config.hyperparameters = agent_config.hyperparameters[agent_group]
             print("AGENT NAME: {}".format(agent_name))
             print("\033[1m" + "{}.{}: {}".format(agent_number, agent_round, agent_name) + "\033[0m", flush=True)
-            agent = agent_class(agent_config)
+            agent: Base_Agent = agent_class(agent_config)
             self.environment_name = agent.environment_title
             print(agent.hyperparameters)
             print("RANDOM SEED " , agent_config.seed)

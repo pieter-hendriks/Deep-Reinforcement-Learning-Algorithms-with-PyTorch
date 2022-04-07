@@ -1,5 +1,5 @@
-from agents.DQN_agents.DQN import DQN
-from agents.HER_Base import HER_Base
+from ..DQN_agents.DQN import DQN
+from ..HER_Base import HER_Base
 
 class DQN_HER(HER_Base, DQN):
     """DQN algorithm with hindsight experience replay"""

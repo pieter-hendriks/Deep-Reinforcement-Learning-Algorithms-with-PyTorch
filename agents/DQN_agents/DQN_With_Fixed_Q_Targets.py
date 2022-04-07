@@ -1,7 +1,7 @@
 import copy
 
-from agents.Base_Agent import Base_Agent
-from agents.DQN_agents.DQN import DQN
+from ..Base_Agent import Base_Agent
+from ..DQN_agents.DQN import DQN
 
 class DQN_With_Fixed_Q_Targets(DQN):
     """A DQN agent that uses an older version of the q_network as the target network"""

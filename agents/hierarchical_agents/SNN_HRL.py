@@ -4,9 +4,9 @@ import time
 import numpy as np
 import torch
 from gym import Wrapper, spaces
-from agents.Base_Agent import Base_Agent
-from agents.policy_gradient_agents.PPO import PPO
-from agents.DQN_agents.DDQN import DDQN
+from ..Base_Agent import Base_Agent
+from ..policy_gradient_agents.PPO import PPO
+from ..DQN_agents.DDQN import DDQN
 
 
 class SNN_HRL(Base_Agent):
