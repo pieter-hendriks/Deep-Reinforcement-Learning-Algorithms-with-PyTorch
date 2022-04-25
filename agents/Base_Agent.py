@@ -44,6 +44,7 @@ class Base_Agent(object):
         self.turn_off_exploration = False
         gym.logger.set_level(40)  # stops it from printing an unnecessary warning
         self.log_game_info()
+        self.episode_log = []
 
     def step(self):
         """Takes a step in the game. This method must be overriden by any agent"""
@@ -170,6 +171,7 @@ class Base_Agent(object):
         self.episode_desired_goals = []
         self.episode_achieved_goals = []
         self.episode_observations = []
+        self.episode_log = []
         if "exploration_strategy" in self.__dict__.keys(): self.exploration_strategy.reset()
         self.logger.info("Reseting game -- New start state {}".format(self.state))
 
@@ -198,6 +200,7 @@ class Base_Agent(object):
     def conduct_action(self, action):
         """Conducts an action in the environment"""
         self.next_state, self.reward, self.done, _ = self.environment.step(action)
+        self.episode_log.append((self.next_state, self.reward, self.done, _))
         self.total_episode_score_so_far += self.reward
         if self.hyperparameters["clip_rewards"]: self.reward =  max(min(self.reward, 1.0), -1.0)
 
@@ -372,3 +375,10 @@ class Base_Agent(object):
         """Copies model parameters from from_model to to_model"""
         for to_model, from_model in zip(to_model.parameters(), from_model.parameters()):
             to_model.data.copy_(from_model.data.clone())
+
+    def saveLog(self, filename, episodeIndex):
+      mode = 'a'
+      if episodeIndex == 0:
+        mode = 'w'
+      with open(filename, mode) as f:
+        f.write(f"\t{self.episode_log.__repr__()}\r\n")

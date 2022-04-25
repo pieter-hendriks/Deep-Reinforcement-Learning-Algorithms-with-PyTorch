@@ -7,7 +7,7 @@ from gym import wrappers
 import numpy as np
 import matplotlib.pyplot as plt
 
-from openAI.agents.agents.Base_Agent import Base_Agent
+from . import Base_Agent
 
 class Trainer(object):
     """Runs games for given agents. Optionally will visualise and save the results"""

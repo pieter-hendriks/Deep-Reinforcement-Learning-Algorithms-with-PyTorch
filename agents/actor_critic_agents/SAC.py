@@ -90,6 +90,7 @@ class SAC(Base_Agent):
             self.state = self.next_state
             self.global_step_number += 1
         if eval_ep: self.print_summary_of_latest_evaluation_episode()
+        self.saveLog("SACTrainResults.py", self.episode_number)
         self.episode_number += 1
 
     def pick_action(self, eval_ep, state=None):
